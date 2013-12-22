@@ -6,6 +6,6 @@
 		<artifactId>jaxrs-tutorial</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>rest-client</artifactId>
+	<artifactId>entity</artifactId>
 	<packaging>jar</packaging>
 </project>
