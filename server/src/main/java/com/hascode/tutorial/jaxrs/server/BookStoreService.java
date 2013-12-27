@@ -3,11 +3,13 @@ package com.hascode.tutorial.jaxrs.server;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import com.hascode.tutorial.jaxrs.entity.Book;
 
+@Stateless
 @Path("/book")
 public class BookStoreService {
 	@EJB
@@ -28,7 +31,8 @@ public class BookStoreService {
 	}
 
 	@DELETE
-	public Response deleteBook(final String id) {
+	@Path("/{id}")
+	public Response deleteBook(final @PathParam("id") String id) {
 		bookRepository.deleteBook(id);
 		return Response.ok().build();
 	}

@@ -45,7 +45,7 @@
 					<goalPrefix>glassfish</goalPrefix>
 					<app>${project.build.directory}/${project.build.finalName}</app>
 					<port>8080</port>
-					<contextRoot>rs</contextRoot>
+					<contextRoot>tutorial</contextRoot>
 					<name>rs2-tutorial</name>
 					<autoDelete>true</autoDelete>
 				</configuration>

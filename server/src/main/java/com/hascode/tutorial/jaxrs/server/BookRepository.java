@@ -1,29 +1,15 @@
 package com.hascode.tutorial.jaxrs.server;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.ejb.Singleton;
 
 import com.hascode.tutorial.jaxrs.entity.Book;
 
-@Singleton
-public class BookRepository {
-	private final Map<String, Book> books = new HashMap<>();
+public interface BookRepository {
 
-	public void saveBook(final Book book) {
-		books.put(book.getId(), book);
-	}
+	public abstract void saveBook(final Book book);
 
-	public void deleteBook(final String id) {
-		if (books.containsKey(id)) {
-			books.remove(id);
-		}
-	}
+	public abstract void deleteBook(final String id);
 
-	public List<Book> getAll() {
-		return new ArrayList<Book>(books.values());
-	}
+	public abstract List<Book> getAll();
+
 }
