@@ -6,10 +6,12 @@ import com.hascode.tutorial.jaxrs.entity.Book;
 
 public interface BookRepository {
 
-	public abstract void saveBook(final Book book);
+	Book saveBook(final Book book);
 
-	public abstract void deleteBook(final String id);
+	void deleteBook(final String id);
 
-	public abstract List<Book> getAll();
+	List<Book> getAll();
+
+	Book getById(String id);
 
 }

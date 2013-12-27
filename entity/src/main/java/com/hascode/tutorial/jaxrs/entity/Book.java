@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +42,12 @@ public class Book implements Serializable {
 
 	public final void setPublished(final Calendar published) {
 		this.published = published;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Book [id=%s, title=%s, price=%s, published=%s]",
+				id, title, price, published);
 	}
 
 }

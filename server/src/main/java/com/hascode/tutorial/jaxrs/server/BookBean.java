@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -16,8 +17,10 @@ public class BookBean implements BookRepository {
 	private final Map<String, Book> books = new HashMap<>();
 
 	@Override
-	public void saveBook(final Book book) {
+	public Book saveBook(final Book book) {
+		book.setId(UUID.randomUUID().toString());
 		books.put(book.getId(), book);
+		return book;
 	}
 
 	@Override
@@ -30,5 +33,10 @@ public class BookBean implements BookRepository {
 	@Override
 	public List<Book> getAll() {
 		return new ArrayList<Book>(books.values());
+	}
+
+	@Override
+	public Book getById(final String id) {
+		return books.get(id);
 	}
 }

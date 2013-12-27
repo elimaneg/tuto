@@ -25,9 +25,10 @@ public class BookStoreService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response saveBook(final Book book) {
-		bookRepository.saveBook(book);
-		return Response.ok().build();
+		Book bookPersisted = bookRepository.saveBook(book);
+		return Response.ok(bookPersisted).build();
 	}
 
 	@DELETE
@@ -45,5 +46,13 @@ public class BookStoreService {
 				books) {
 		};
 		return Response.ok(bookWrapper).build();
+	}
+
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getById(final @PathParam("id") String id) {
+		Book book = bookRepository.getById(id);
+		return Response.ok(book).build();
 	}
 }
