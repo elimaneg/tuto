@@ -15,12 +15,11 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.hascode.tutorial.jaxrs.entity.Book;
 
-public class ClientExample {
+public class ClientExamples {
 	private static final String REST_SERVICE_URL = "http://localhost:8080/tutorial/rs/book";
 
 	private static final String TITLE = "One big book";
@@ -28,19 +27,20 @@ public class ClientExample {
 	private static final GregorianCalendar PUBLISHED = new GregorianCalendar(
 			2013, 12, 24);
 
-	Book book = new Book();
 	Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
-	@Before
-	public void setup() {
+	public Book mockBook() {
+		Book book = new Book();
 		book.setTitle(TITLE);
 		book.setPrice(PRICE);
 		book.setPublished(PUBLISHED);
+		return book;
 	}
 
 	@Test
-	public void clientShouldCRUDBook() {
+	public void crudExample() {
 		// 1. Save a new book
+		Book book = mockBook();
 		Book bookPersisted = client
 				.target(REST_SERVICE_URL)
 				.request()
@@ -60,7 +60,7 @@ public class ClientExample {
 
 		// 3. Fetch all books
 		GenericType<List<Book>> bookType = new GenericType<List<Book>>() {
-		};
+		}; // generic type to wrap a generic list of books
 		List<Book> books = client.target(REST_SERVICE_URL).request()
 				.get(bookType);
 		assertThat(books.size(), equalTo(1));
