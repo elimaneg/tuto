@@ -13,9 +13,11 @@ import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.Test;
@@ -104,4 +106,24 @@ public class AsyncClientExamples {
 				}).get();
 	}
 
+	@Test
+	public void requestPreparationExample() throws Exception {
+		Book book = mockBook();
+		Invocation saveBook = client.target(REST_SERVICE_URL).request()
+				.buildPost(Entity.entity(book, MediaType.APPLICATION_JSON));
+		Invocation listBooks = client.target(REST_SERVICE_URL).request()
+				.buildGet();
+
+		Response response = saveBook.invoke();
+		Book b1 = response.readEntity(Book.class);
+
+		// alternative: Book b1 = saveBook.invoke(Book.class);
+		assertThat(b1.getId(), notNullValue());
+
+		// async invocation
+		Future<List<Book>> b = listBooks.submit(new GenericType<List<Book>>() {
+		});
+		List<Book> books = b.get();
+		assertThat(books.size(), greaterThanOrEqualTo(2));
+	}
 }
